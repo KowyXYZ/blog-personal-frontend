@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Card, CardContent } from "@/components/ui/card";
+import Image from "next/image";
 
 export function SidebarProfile() {
   return (
@@ -13,19 +14,23 @@ export function SidebarProfile() {
         <div className="flex flex-col items-center space-y-4">
           <Avatar className="h-24 w-24">
             <AvatarImage src="/placeholder-avatar.jpg" alt="Profile" />
-            <AvatarFallback>JD</AvatarFallback>
+            <AvatarFallback>
+              <Image src="/pfp.webp" alt="Profile" width={100} height={100} />
+            </AvatarFallback>
           </Avatar>
-          
+
           <div className="text-center space-y-1">
-            <h2 className="text-xl font-semibold">John Doe</h2>
-            <p className="text-sm text-muted-foreground">Full Stack Developer</p>
+            <h2 className="text-xl font-semibold">Kowy (Pavle) </h2>
+            <p className="text-sm text-muted-foreground">
+              Full Stack Developer
+            </p>
           </div>
 
           <Separator />
 
           <div className="flex items-center gap-3">
             <a
-              href="https://github.com"
+              href="https://github.com/KowyXYZ"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-foreground transition-colors"
@@ -33,17 +38,9 @@ export function SidebarProfile() {
             >
               <Github className="h-5 w-5" />
             </a>
+
             <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              aria-label="Twitter"
-            >
-              <Twitter className="h-5 w-5" />
-            </a>
-            <a
-              href="https://linkedin.com"
+              href="https://linkedin.com/in/kowy-dev"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-foreground transition-colors"
@@ -52,7 +49,7 @@ export function SidebarProfile() {
               <Linkedin className="h-5 w-5" />
             </a>
             <a
-              href="mailto:john@example.com"
+              href="mailto:kowybusiness@gmail.com"
               className="text-muted-foreground hover:text-foreground transition-colors"
               aria-label="Email"
             >
@@ -63,8 +60,7 @@ export function SidebarProfile() {
           <Separator />
 
           <div className="w-full">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Theme</span>
+            <div className="flex items-center justify-center">
               <ThemeToggle />
             </div>
           </div>
@@ -73,4 +69,3 @@ export function SidebarProfile() {
     </Card>
   );
 }
-

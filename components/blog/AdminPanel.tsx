@@ -31,9 +31,7 @@ export function AdminPanel({ initialPosts }: AdminPanelProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const isAuthorized =
-    isLoaded &&
-    user &&
-    user.primaryEmailAddress?.emailAddress === ADMIN_EMAIL;
+    isLoaded && user && user.primaryEmailAddress?.emailAddress === ADMIN_EMAIL;
 
   const refreshPosts = async () => {
     setIsLoading(true);
@@ -108,6 +106,7 @@ export function AdminPanel({ initialPosts }: AdminPanelProps) {
             <div className="sticky top-8">
               <Card>
                 <CardHeader>
+                  <Link href="/">← Back to Home</Link>
                   <CardTitle>Admin Panel</CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -125,9 +124,6 @@ export function AdminPanel({ initialPosts }: AdminPanelProps) {
 
           {/* Main Content - 75% width on desktop */}
           <main className="lg:w-3/4 space-y-6">
-            <div className="space-y-4">
-              <h1 className="text-3xl font-bold">Blog Posts</h1>
-            </div>
             <BlogList
               posts={posts}
               currentPage={currentPage}
@@ -162,4 +158,3 @@ export function AdminPanel({ initialPosts }: AdminPanelProps) {
     </div>
   );
 }
-

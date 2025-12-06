@@ -10,7 +10,7 @@ export function SearchBar() {
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
   const [localValue, setLocalValue] = useState(searchParams.get("q") || "");
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   // Sync local state with URL params when they change externally
   useEffect(() => {
@@ -32,7 +32,7 @@ export function SearchBar() {
       // Debounce URL update
       timeoutRef.current = setTimeout(() => {
         const params = new URLSearchParams(searchParams.toString());
-        
+
         if (value.trim()) {
           params.set("q", value.trim());
           params.set("page", "1"); // Reset to page 1 on search
@@ -71,4 +71,3 @@ export function SearchBar() {
     </div>
   );
 }
-

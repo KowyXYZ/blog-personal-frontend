@@ -29,7 +29,6 @@ export default async function Home({ searchParams }: HomeProps) {
           {/* Main Content - 75% width on desktop */}
           <main className="lg:w-3/4 space-y-6">
             <div className="space-y-4">
-              <h1 className="text-3xl font-bold">Blog Posts</h1>
               <SearchBar />
             </div>
             <BlogList
