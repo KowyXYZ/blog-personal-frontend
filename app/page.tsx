@@ -1,19 +1,10 @@
 import { SidebarProfile } from "@/components/sidebar-profile";
 import { SearchBar } from "@/components/search-bar";
-import { BlogList } from "@/components/blog-list";
-import { mockPosts } from "@/data/mock-posts";
-import { BlogPost } from "@/lib/types";
+import { BlogList } from "@/components/blog/BlogList";
+import { getPosts } from "@/lib/blog-api";
 
 interface HomeProps {
   searchParams: Promise<{ page?: string; q?: string }>;
-}
-
-function sortPostsByDate(posts: BlogPost[]): BlogPost[] {
-  return [...posts].sort((a, b) => {
-    const dateA = new Date(a.createdAt).getTime();
-    const dateB = new Date(b.createdAt).getTime();
-    return dateB - dateA; // Descending (newest first)
-  });
 }
 
 export default async function Home({ searchParams }: HomeProps) {
@@ -21,8 +12,8 @@ export default async function Home({ searchParams }: HomeProps) {
   const currentPage = Math.max(1, parseInt(params.page || "1", 10));
   const searchQuery = params.q || "";
 
-  // Sort posts by createdAt descending (newest first)
-  const sortedPosts = sortPostsByDate(mockPosts);
+  // Fetch posts from API (backend already sorts by CreatedAt desc)
+  const posts = await getPosts().catch(() => []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -42,7 +33,7 @@ export default async function Home({ searchParams }: HomeProps) {
               <SearchBar />
             </div>
             <BlogList
-              posts={sortedPosts}
+              posts={posts}
               currentPage={currentPage}
               searchQuery={searchQuery}
             />

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft } from "lucide-react";
-import { mockPosts } from "@/data/mock-posts";
+import { getPostBySlug } from "@/lib/blog-api";
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -21,7 +21,14 @@ function formatDate(dateString: string): string {
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
-  const post = mockPosts.find((p) => p.slug === slug);
+  
+  let post;
+  try {
+    post = await getPostBySlug(slug);
+  } catch (error) {
+    console.error("Error fetching post:", error);
+    notFound();
+  }
 
   if (!post) {
     notFound();

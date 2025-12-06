@@ -1,19 +1,29 @@
 "use client";
 
 import { BlogPost } from "@/lib/types";
-import { BlogCard } from "./blog-card";
-import { PaginationControls } from "./pagination-controls";
+import { BlogCard } from "./BlogCard";
+import { PaginationControls } from "../pagination-controls";
 import { Card, CardContent } from "@/components/ui/card";
 
 interface BlogListProps {
   posts: BlogPost[];
   currentPage: number;
   searchQuery?: string;
+  isAdmin?: boolean;
+  onEdit?: (post: BlogPost) => void;
+  onDelete?: (post: BlogPost) => void;
 }
 
 const POSTS_PER_PAGE = 7;
 
-export function BlogList({ posts, currentPage, searchQuery }: BlogListProps) {
+export function BlogList({
+  posts,
+  currentPage,
+  searchQuery,
+  isAdmin = false,
+  onEdit,
+  onDelete,
+}: BlogListProps) {
   // Filter posts by search query (case-insensitive)
   const filteredPosts = searchQuery
     ? posts.filter((post) =>
@@ -47,7 +57,13 @@ export function BlogList({ posts, currentPage, searchQuery }: BlogListProps) {
     <div className="space-y-6">
       <div className="grid gap-6 md:grid-cols-1">
         {paginatedPosts.map((post) => (
-          <BlogCard key={post.id} post={post} />
+          <BlogCard
+            key={post.id}
+            post={post}
+            isAdmin={isAdmin}
+            onEdit={onEdit}
+            onDelete={onDelete}
+          />
         ))}
       </div>
       {totalPages > 1 && (
