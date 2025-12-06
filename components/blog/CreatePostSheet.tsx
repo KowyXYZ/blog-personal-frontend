@@ -43,12 +43,14 @@ export function CreatePostSheet({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  // Auto-generate slug from title until user manually edits
-  useEffect(() => {
-    if (!isSlugManuallyEdited && title) {
-      setSlug(generateSlug(title));
+  // Auto-generate slug from title in real-time until user manually edits
+  const handleTitleChange = (value: string) => {
+    setTitle(value);
+    // Auto-generate slug if user hasn't manually edited it
+    if (!isSlugManuallyEdited) {
+      setSlug(generateSlug(value));
     }
-  }, [title, isSlugManuallyEdited]);
+  };
 
   const handleSlugChange = (value: string) => {
     setSlug(value);
@@ -57,7 +59,7 @@ export function CreatePostSheet({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!title.trim() || !slug.trim() || !content.trim()) {
       toast({
         title: "Validation Error",
@@ -89,7 +91,8 @@ export function CreatePostSheet({
     } catch (error) {
       toast({
         title: "Error",
-        description: error instanceof Error ? error.message : "Failed to create post",
+        description:
+          error instanceof Error ? error.message : "Failed to create post",
         variant: "destructive",
       });
     } finally {
@@ -124,7 +127,7 @@ export function CreatePostSheet({
               <Input
                 id="title"
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) => handleTitleChange(e.target.value)}
                 placeholder="Enter post title"
                 required
               />
@@ -152,7 +155,11 @@ export function CreatePostSheet({
             </div>
           </div>
           <SheetFooter>
-            <Button type="button" variant="outline" onClick={() => handleOpenChange(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => handleOpenChange(false)}
+            >
               Cancel
             </Button>
             <Button type="submit" disabled={isSubmitting}>
@@ -164,4 +171,3 @@ export function CreatePostSheet({
     </Sheet>
   );
 }
-

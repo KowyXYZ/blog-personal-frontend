@@ -12,6 +12,7 @@ import { BlogPost } from "@/lib/types";
 import { getPosts } from "@/lib/blog-api";
 import { Plus } from "lucide-react";
 import Link from "next/link";
+import { SearchBar } from "@/components/search-bar";
 
 interface AdminPanelProps {
   initialPosts: BlogPost[];
@@ -124,6 +125,16 @@ export function AdminPanel({ initialPosts }: AdminPanelProps) {
 
           {/* Main Content - 75% width on desktop */}
           <main className="lg:w-3/4 space-y-6">
+            <div className="space-y-4">
+              <SearchBar
+                initialValue={searchQuery}
+                onSearch={(query) => {
+                  setSearchQuery(query);
+                  setCurrentPage(1); // Reset to page 1 on search
+                }}
+                placeholder="Search posts... (Press Enter to search)"
+              />
+            </div>
             <BlogList
               posts={posts}
               currentPage={currentPage}
